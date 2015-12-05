@@ -5,8 +5,7 @@ var highScore = 0;
 var collisionCount = 0;
 var reset = false;
 //create canvas, then attach elements
-var canvas = d3.selectAll("body")
-				.append("svg")
+var canvas = d3.selectAll("svg")
 				.attr("height", 500)
 				.attr("width", 500);
 
@@ -122,10 +121,13 @@ var update = function(data){
 		.attr("id", function(d) {
 			return d.i;
 		})
-		.attr("fill", "red")
+		.style('fill', 'url(#shuriken)')
 		.attr("class", "enemy");
 		//transform
 		//update cx and cy randomly
+
+	
+
 
 //ENTER + UPDATE
 	enemies.transition().duration(1000)
