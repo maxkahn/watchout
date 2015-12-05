@@ -47,19 +47,35 @@ player.enter()
 		.attr("class", "player")
 		.call(drag);
 
-//collide(enemy_arr[i])
 
-var collide = function(enemy){
+var collide = function(){
+	
+	return function() {
+		var ex = this.getAttribute('cx'); 
+		var px = player1[0].x;
+		var ey = this.getAttribute('cy'); 
+		var py = player1[0].y;
 
-	var ex = enemy.x; 
-	var px = player1[0].x;
-	var ey = enemy.y; 
-	var py = player1[0].y;
 
-	var distance = Math.sqrt((Math.pow((ex-px),2)+Math.pow((ey-py),2)));
-	var radSum = enemy.r + player1[0].r;
-	console.log(distance<radSum);
-	return distance<radSum;
+		if(this.id === "5"){
+			// console.log(ex);
+		}
+
+		var distance = Math.sqrt((Math.pow((ex-px),2)+Math.pow((ey-py),2)));
+		var radSum = parseInt(this.getAttribute('r')) + player1[0].r;
+		console.log(distance<radSum);
+
+		if(distance<radSum){
+			if(score>highScore){
+				highScore = score;
+				d3.selectAll(".highscore span")
+				  .text(highScore);
+			}
+			score = 0;
+			reset = true;
+		} 
+			return distance < radSum;
+	};
 
 };
 
@@ -84,6 +100,7 @@ function dragended(d) {
   // d3.select(this).classed("dragging", false);
 }
 
+
 var update = function(data){
 
 //BIND DATA TO DOM
@@ -102,16 +119,19 @@ var update = function(data){
 		.attr("r", function(d) {
 			return d.r;
 		})
+		.attr("id", function(d) {
+			return d.i;
+		})
 		.attr("fill", "red")
 		.attr("class", "enemy");
 		//transform
 		//update cx and cy randomly
 
 //ENTER + UPDATE
-	enemies.transition()
+	enemies.transition().duration(1000)
+		.tween('collisionDetection', collide)
 		.attr('cx', function(d){ return d.x *Math.random()} )
-		.attr('cy', function(d){ return d.y *Math.random()} )
-		.duration(1000);
+		.attr('cy', function(d){ return d.y *Math.random()} );
 
 
 
@@ -130,24 +150,12 @@ setInterval(function(){
 		collisionCount++;
 		reset = false;
 	}
+	d3.selectAll(".current span")
+      .text(score);
+    d3.selectAll(".collisions span")
+	  .text(collisionCount);
 }, 1000);
 
-setInterval(function(){
-	for(var i = 0; i < enemy_arr.length; i++){
-		if(collide(enemy_arr[i])){
-			if(score>highScore){
-				highScore = score;
-				d3.selectAll(".highscore span")
-				  .text(highScore);
-			}
-			score = 0;
-			reset = true;
-		} 
-	}
-	d3.selectAll(".current span")
-		.text(score);
-	d3.selectAll(".collisions span")
-			  .text(collisionCount);
-}, 50);
+
 
 					
