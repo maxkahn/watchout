@@ -1,6 +1,9 @@
 // start slingin' some d3 here.
-var enemy_arr = [];
+var enemy_arr = []; 
 var score = 0;
+var highScore = 0;
+var collisionCount = 0;
+var reset = false;
 //create canvas, then attach elements
 var canvas = d3.selectAll("body")
 				.append("svg")
@@ -120,22 +123,31 @@ var update = function(data){
 
 setInterval(function(){
 	update(enemy_arr);
-	var reset = false;
+	if (!reset) {
+		score++;
+	}
+	else {
+		collisionCount++;
+		reset = false;
+	}
+}, 1000);
+
+setInterval(function(){
 	for(var i = 0; i < enemy_arr.length; i++){
 		if(collide(enemy_arr[i])){
+			if(score>highScore){
+				highScore = score;
+				d3.selectAll(".highscore span")
+				  .text(highScore);
+			}
 			score = 0;
 			reset = true;
 		} 
 	}
-	if (!reset) {
-	score++;
-	}
-	else {
-	reset = false;
-	}
 	d3.selectAll(".current span")
 		.text(score);
-}, 1000);
-
+	d3.selectAll(".collisions span")
+			  .text(collisionCount);
+}, 50);
 
 					
