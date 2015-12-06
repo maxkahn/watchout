@@ -87,7 +87,8 @@ function dragstarted(d) {
 }
 
 function dragged(d) {
-  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+  d3.select(this).attr("cx", d.x = d3.event.x)
+                 .attr("cy", d.y = d3.event.y);
 }
 
 function dragended(d) {
@@ -95,11 +96,9 @@ function dragended(d) {
 }
 
 
-var update = function(data){
-
 //BIND DATA TO DOM
 	var enemies = canvas.selectAll('.enemy')
-					.data(data, function(d){ return d.i; });
+					.data(enemy_arr, function(d){ return d.i; });
 
 
 //ENTER	
@@ -120,24 +119,27 @@ var update = function(data){
 		.attr("width", 13)
 		.attr("height", 13)
 		.attr("class", "enemy");
+
+var update = function(element){
+
 	
 //ENTER + UPDATE
-	enemies.transition().duration(1000)
+	element.transition().duration(Math.random()*5000)
 		.tween('collisionDetection', collide)
 		.attr('x', function(d){
 			return 500 * Math.random();})
 		.attr('y', function(d) {
 			return 500 * Math.random();
+		}).each('end', function(){
+			update(d3.select(this));
 		});
 
-//EXIT
-	enemies.exit().remove();
 }
 
+update(enemies);
 //INITIALIZE
 
 setInterval(function(){
-	update(enemy_arr);
 	if (!reset) {
 		score++;
 	}
@@ -151,6 +153,8 @@ setInterval(function(){
 	  .text(collisionCount);
 }, 1000);
 
+// //EXIT
+// 	enemies.exit().remove();
 
 
 					
