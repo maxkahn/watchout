@@ -7,7 +7,10 @@
 
 .enemy {
 	-webkit-animation: whirl 2s infinite linear;
+	-moz-animation: whirl 2s infinite linear;
+	-o-animation: whirl 2s infinite linear;
 	animation: whirl 2s infinite linear;
+	
 	-webkit-transform-origin: 50% 50% 0;
 	-moz-transform-origin: 50% 50% 0;
 	-o-transform-origin: 50% 50% 0;

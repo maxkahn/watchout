@@ -111,12 +111,6 @@ var update = function(data){
 		.attr("y", function(d) {
 			return d.y;
 		})
-		// .attr("webkit-transform-origin", function(d) {
-		// 	return d.x + ',' + d.y;
-		// })
-		// .attr('transform-origin', function(d) {
-		// 	return d.x + ',' + d.y;
-		// })
 		.attr("r", function(d) {
 			return d.r;
 		})
@@ -127,10 +121,6 @@ var update = function(data){
 		.attr("height", 13)
 		.attr("class", "enemy");
 	
-
-	
-
-
 //ENTER + UPDATE
 	enemies.transition().duration(1000)
 		.tween('collisionDetection', collide)
@@ -139,15 +129,6 @@ var update = function(data){
 		.attr('y', function(d) {
 			return 500 * Math.random();
 		});
-
-		// .attr('webkit-transform-origin', function(d) {
-		// 	return this.getAttribute('x') + ',' + this.getAttribute('y');
-		// })
-		// .attr('transform-origin', function(d) {
-		// 	return this.getAttribute('x') + ',' + this.getAttribute('y');
-		// });
-
-
 
 //EXIT
 	enemies.exit().remove();
