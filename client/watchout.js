@@ -1,5 +1,5 @@
 // start slingin' some d3 here.
-var enemy_arr = []; 
+var enemy_arr = [];
 var score = 0;
 var highScore = 0;
 var collisionCount = 0;
@@ -134,13 +134,12 @@ var update = function(data){
 //ENTER + UPDATE
 	enemies.transition().duration(1000)
 		.tween('collisionDetection', collide)
-		.attr('x', function(d, i){
-			var newpos = d.x * Math.random();
-			if (i === 5) {
-				console.log(Math.floor(newpos / 5));
-			}
-			return newpos;} )
-		.attr('y', function(d){ return d.y *Math.random()} );
+		.attr('x', function(d){
+			return 500 * Math.random();})
+		.attr('y', function(d) {
+			return 500 * Math.random();
+		});
+
 		// .attr('webkit-transform-origin', function(d) {
 		// 	return this.getAttribute('x') + ',' + this.getAttribute('y');
 		// })

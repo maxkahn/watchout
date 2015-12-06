@@ -9,10 +9,28 @@
 	-webkit-animation: whirl 2s infinite linear;
 	animation: whirl 2s infinite linear;
 	-webkit-transform-origin: 50% 50% 0;
+	-moz-transform-origin: 50% 50% 0;
+	-o-transform-origin: 50% 50% 0;
 	transform-origin: 50% 50% 0;
 }
 
 @-webkit-keyframes whirl {
+	0% {transform: rotate(0deg);}
+	25% {transform: rotate(90deg);}
+	50% {transform: rotate(180deg);}
+	75% {transform: rotate(270deg);}
+	100% {transform: rotate(360deg);}
+}
+
+@-moz-keyframes whirl {
+	0% {transform: rotate(0deg);}
+	25% {transform: rotate(90deg);}
+	50% {transform: rotate(180deg);}
+	75% {transform: rotate(270deg);}
+	100% {transform: rotate(360deg);}
+}
+
+@-o-keyframes whirl {
 	0% {transform: rotate(0deg);}
 	25% {transform: rotate(90deg);}
 	50% {transform: rotate(180deg);}
