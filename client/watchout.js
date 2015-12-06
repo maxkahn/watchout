@@ -50,19 +50,14 @@ player.enter()
 var collide = function(){
 	
 	return function() {
-		var ex = this.getAttribute('cx'); 
+		var ex = this.getAttribute('x'); 
 		var px = player1[0].x;
-		var ey = this.getAttribute('cy'); 
+		var ey = this.getAttribute('y'); 
 		var py = player1[0].y;
-
-
-		if(this.id === "5"){
-			// console.log(ex);
-		}
 
 		var distance = Math.sqrt((Math.pow((ex-px),2)+Math.pow((ey-py),2)));
 		var radSum = parseInt(this.getAttribute('r')) + player1[0].r;
-		console.log(distance<radSum);
+		//console.log(distance<radSum);
 
 		if(distance<radSum){
 			if(score>highScore){
@@ -108,23 +103,30 @@ var update = function(data){
 
 
 //ENTER	
-	enemies.enter().append('circle')
-		.attr("cx", function(d) {
+	enemies.enter().append('svg:image')
+		.attr('xlink:href', 'Shuriken.svg.png')
+		.attr("x", function(d) {
 			return d.x;
 		})
-		.attr("cy", function(d) {
+		.attr("y", function(d) {
 			return d.y;
 		})
+		// .attr("webkit-transform-origin", function(d) {
+		// 	return d.x + ',' + d.y;
+		// })
+		// .attr('transform-origin', function(d) {
+		// 	return d.x + ',' + d.y;
+		// })
 		.attr("r", function(d) {
 			return d.r;
 		})
 		.attr("id", function(d) {
 			return d.i;
 		})
-		.style('fill', 'url(#shuriken)')
+		.attr("width", 13)
+		.attr("height", 13)
 		.attr("class", "enemy");
-		//transform
-		//update cx and cy randomly
+	
 
 	
 
@@ -132,8 +134,19 @@ var update = function(data){
 //ENTER + UPDATE
 	enemies.transition().duration(1000)
 		.tween('collisionDetection', collide)
-		.attr('cx', function(d){ return d.x *Math.random()} )
-		.attr('cy', function(d){ return d.y *Math.random()} );
+		.attr('x', function(d, i){
+			var newpos = d.x * Math.random();
+			if (i === 5) {
+				console.log(Math.floor(newpos / 5));
+			}
+			return newpos;} )
+		.attr('y', function(d){ return d.y *Math.random()} );
+		// .attr('webkit-transform-origin', function(d) {
+		// 	return this.getAttribute('x') + ',' + this.getAttribute('y');
+		// })
+		// .attr('transform-origin', function(d) {
+		// 	return this.getAttribute('x') + ',' + this.getAttribute('y');
+		// });
 
 
 
